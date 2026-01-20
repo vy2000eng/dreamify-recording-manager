@@ -1,0 +1,15 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+/drf.API/obj/
+/drf.API/bin/
+/drf.API/appsettings.json
+/drf.API/appsettings.Development.json
+/drf.Application/bin/
+/drf.Application/obj/
+/drf.Domain/bin/
+/drf.Domain/obj/
+/.idea/
+/drf.API/Properties/launchSettings.json

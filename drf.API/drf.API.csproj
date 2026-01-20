@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>dreamify_recording_manager</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AWSSDK.Core" Version="4.0.3.9" />
+        <PackageReference Include="AWSSDK.S3" Version="4.0.17.2" />
+        <PackageReference Include="Google.Apis.Auth" Version="1.73.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.11" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.11" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.9" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.6.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\drf.Domain\drf.Domain.csproj" />
+      <ProjectReference Include="..\drf.Infrastructure\drf.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
