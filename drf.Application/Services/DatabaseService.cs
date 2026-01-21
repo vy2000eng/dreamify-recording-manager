@@ -8,10 +8,12 @@ namespace drf.Application.Services;
 public class DatabaseService:IDatabaseService
 {
     private readonly IDreamsRepository _dreamsRepository;
+    private readonly IUserRepository _userRepository;
 
-    public DatabaseService(IDreamsRepository dreamsRepository)
+    public DatabaseService(IDreamsRepository dreamsRepository,IUserRepository userRepository)
     {
         _dreamsRepository = dreamsRepository;
+        _userRepository = userRepository;
     }
     
     public async Task AddDreamToDataBase(ClaimsPrincipal claimsPrincipal,UploadRequest uploadRequest)
@@ -33,6 +35,26 @@ public class DatabaseService:IDatabaseService
             throw new Exception($"Unable to add Dream to data base: {uploadRequest.FileName}.");
         }
  
+    }
+
+    public async Task<Dream?> GetDream( ClaimsPrincipal claimsPrincipal,string dreamId)
+    {
+        var userId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                     ?? claimsPrincipal.FindFirst("sub")?.Value;
+       var dreams = await _userRepository.GetUserDreams(userId);
+       
+       return dreams.Find(dream => dream.LocalDreamId == dreamId);
+
+
+    }
+
+    public async Task<List<Dream>> GetDreamMetaData(ClaimsPrincipal claimsPrincipal)
+    {
+        var userId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                     ?? claimsPrincipal.FindFirst("sub")?.Value;
+        return await _userRepository.GetUserDreams(userId);
+
+
     }
     
     

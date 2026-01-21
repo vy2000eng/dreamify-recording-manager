@@ -21,5 +21,15 @@ public class UserRepository: IUserRepository
         return user;
     }
 
+    public async Task<List<Dream>> GetUserDreams(string userId)
+    {
+        //return await _context.Users.fin
+        
+        return await _context.Dreams.Where(dreams => dreams.UserId == Guid.Parse(userId)).ToListAsync(); ;
+        
+    }
+    
+   // public async Task
+
 
 }   

@@ -3,7 +3,9 @@ using dreamify.Domain.Entities;
 using drf.Application.Abstracts;
 using drf.Application.Services;
 using drf.Domain.Requests;
+using drf.Domain.Response;
 using drf.Infrastructure.Options;
+using drf.Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -55,42 +57,34 @@ public class BucketController:ControllerBase
         }
     }
 
-    // [HttpGet("download/{dreamId}")]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    // public async Task<IResult> DownloadDream(string dreamId)
-    // {
-    //     
-    // }
-    
-    
-   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpGet("download/{dreamId}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IResult> DownloadDream(string dreamId)
+    {
+        
+        var dream = await _databaseService.GetDream(User, dreamId);
+        if (dream == null)
+        {
+            return Results.NotFound(new { error = "Dream not found" });
+        }
+        var memoryStream = await _bucketService.DownloadDreamFromS3Bucket(User, dream.FileName);
+        memoryStream.Position = 0;
+        return Results.File(memoryStream, "audio/m4a", $"{dream.FileName}.m4a");
 
-    // [HttpGet("download/{dreamId}")]
-    // public IActionResult GetDownloadUrl(string dreamId)
-    // {
-    //     var key = $"recordings/{dreamId}.aac";
-    //     
-    //     var request = new GetPreSignedUrlRequest
-    //     {
-    //         BucketName = _awsOptions.Bucket,
-    //         Key = key,
-    //         Expires = DateTime.UtcNow.AddHours(1)
-    //     };
-    //     
-    //     var url = _s3Client.GetPreSignedURL(request);
-    //     
-    //     return Ok(new { downloadUrl = url });
-    // }
+    }
+
+    [HttpGet("dreamsMetaData")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IResult> GetDreamMetaData()
+    {
+        return Results.Ok(new DreamMetaDataResponse
+        {
+            Dreams = await _databaseService.GetDreamMetaData(User)
+
+        });
+
+
+    }
     
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    // [HttpDelete("{dreamId}")]
-    // public async Task<IActionResult> DeleteDream(string dreamId)
-    // {
-    //     var key = $"recordings/{dreamId}.aac";
-    //     
-    //     await _s3Client.DeleteObjectAsync(_awsOptions.Bucket, key);
-    //     
-    //     return Ok();
-    // }
     
 }

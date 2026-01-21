@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using drf.Application.Abstracts;
 using drf.Domain.Requests;
@@ -44,6 +45,25 @@ public class S3Processor:IS3Processor
         
         var transferUtility = new TransferUtility(_s3Client);
         await transferUtility.UploadAsync(uploadRequest);
+    }
+
+    public async Task<MemoryStream> DownloadFromS3(string userId, string fileName)
+    {
+        var key = $"recordings/{userId}/{fileName}.m4a";
+        var getRequest = new GetObjectRequest
+        {
+            BucketName = _awsOptions.Bucket,
+            Key = key
+        };
+        using var response = await _s3Client.GetObjectAsync(getRequest);
+        using var responseStream = response.ResponseStream;
+        
+        var memoryStream = new MemoryStream();
+        await responseStream.CopyToAsync(memoryStream);
+        return memoryStream;
+
+        
+        
     }
     
     

@@ -41,6 +41,15 @@ public class BucketService:IBucketService
 
         
     }
+
+    public async Task<MemoryStream> DownloadDreamFromS3Bucket(ClaimsPrincipal claimsPrincipal,string fileName)
+    {
+        var userId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                     ?? claimsPrincipal.FindFirst("sub")?.Value;
+        
+        return await _s3Processor.DownloadFromS3(userId, fileName );
+        
+    }
     
     
     

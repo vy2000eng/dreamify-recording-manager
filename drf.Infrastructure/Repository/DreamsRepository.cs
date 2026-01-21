@@ -20,4 +20,9 @@ public class DreamsRepository:IDreamsRepository
             await _context.SaveChangesAsync();
 
     }
+
+    public async Task<Dream> GetDream(string dreamId)
+    {
+        return await _context.Dreams.FindAsync(dreamId);
+    }
 }
