@@ -20,7 +20,8 @@ public class DatabaseService:IDatabaseService
         {
             var userId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value
                          ?? claimsPrincipal.FindFirst("sub")?.Value;
-            var dream = Dream.Create(Guid.Parse(userId), uploadRequest.FileName, uploadRequest.TranscribedText,
+            
+            var dream = Dream.Create(Guid.Parse(userId),uploadRequest.LocalDreamId, uploadRequest.FileName, uploadRequest.TranscribedText,
                 DateTime.Parse(uploadRequest.CreatedAt));
 
             await _dreamsRepository.AddDream(dream);

@@ -161,6 +161,10 @@ namespace drf.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("LocalDreamId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Tag")
                         .HasColumnType("longtext");
 

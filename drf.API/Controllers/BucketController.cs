@@ -54,6 +54,14 @@ public class BucketController:ControllerBase
             return Results.BadRequest("An Unexpected error occured while uploading file to S3 bucket");
         }
     }
+
+    // [HttpGet("download/{dreamId}")]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // public async Task<IResult> DownloadDream(string dreamId)
+    // {
+    //     
+    // }
+    
     
    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 

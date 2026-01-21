@@ -8,6 +8,8 @@ namespace drf.Domain.Requests;
 
 public record UploadRequest
 {
+    public string? LocalDreamId { get; init; }
+
     public IFormFile? File { get; init; }
     public string? FileName { get; init; }
     public string? Title { get; init; }
