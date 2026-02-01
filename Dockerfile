@@ -9,10 +9,10 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy project files for restore (assuming they're all in the root level)
-COPY ["drf.API/dreamify.API.csproj", "drf.API/"]
-COPY ["drf.Application/dreamify.Application.csproj", "drf.Application/"]
-COPY ["drf.Domain/dreamify.Domain.csproj", "drf.Domain/"]
-COPY ["drf.Infrastructure/dreamify.Infrastructure.csproj", "drf.Infrastructure/"]
+COPY ["drf.API/drf.API.csproj", "drf.API/"]
+COPY ["drf.Application/drf.Application.csproj", "drf.Application/"]
+COPY ["drf.Domain/drf.Domain.csproj", "drf.Domain/"]
+COPY ["drf.Infrastructure/drf.Infrastructure.csproj", "drf.Infrastructure/"]
 
 # Restore dependencies starting from the API project
 RUN dotnet restore "drf.API/drf.API.csproj"
