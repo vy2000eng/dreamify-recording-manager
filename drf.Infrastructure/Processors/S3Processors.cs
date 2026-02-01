@@ -49,7 +49,7 @@ public class S3Processor:IS3Processor
 
     public async Task<MemoryStream> DownloadFromS3(string userId, string fileName)
     {
-        var key = $"recordings/{userId}/{fileName}.m4a";
+        var key = $"recordings/{userId}/{fileName}";
         var getRequest = new GetObjectRequest
         {
             BucketName = _awsOptions.Bucket,
