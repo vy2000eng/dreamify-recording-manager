@@ -29,6 +29,8 @@ public class GlobalExceptionHandler : IExceptionHandler
     {
         return exception switch
         {
+            UserNotFoundException  => (HttpStatusCode.NotFound, exception.Message),
+            DreamNotFoundException  => (HttpStatusCode.NotFound, exception.Message),
             LoginFailedException => (HttpStatusCode.Unauthorized, exception.Message),
             UserAlreadyExistsException => (HttpStatusCode.Conflict, exception.Message),
             RegistrationFailedException => (HttpStatusCode.BadRequest, exception.Message),

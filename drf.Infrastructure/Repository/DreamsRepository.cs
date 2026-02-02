@@ -1,7 +1,9 @@
 using dreamify.Domain.Entities;
 using drf.Application.Abstracts;
+using drf.Domain.Exceptions;
 using drf.Domain.Requests;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace drf.Infrastructure.Repository;
 
@@ -23,6 +25,22 @@ public class DreamsRepository:IDreamsRepository
 
     public async Task<Dream> GetDream(string dreamId)
     {
-        return await _context.Dreams.FindAsync(dreamId);
+        var dream = await _context.Dreams.Where(dream => dream.LocalDreamId == dreamId).FirstOrDefaultAsync();//FindAsync(dream > dream.)//FindAsync(dreamId);
+        if( dream == null)
+        {
+            throw new DreamNotFoundException();
+
+        }
+        return dream;
     }
+
+    public async Task UpdateDream(Dream dream)
+    {
+          _context.Dreams.Update(dream);
+          await _context.SaveChangesAsync();
+
+    }
+    
+    
+    
 }

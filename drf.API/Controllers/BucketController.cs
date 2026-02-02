@@ -85,6 +85,28 @@ public class BucketController:ControllerBase
 
 
     }
+
+    [HttpPost("updateDream")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IResult> UpdateDream(UpdateDreamRequest request)
+    {
+        try
+        {
+            await _databaseService.UpdateDream(User, request);
+        
+        
+            return Results.Ok(200);
+
+        }
+        catch (Exception ex)
+        {
+            return Results.BadRequest("An Unexpected error occured while updating dream.");
+
+        }
+     
+    }
+
+    
     
     
 }
