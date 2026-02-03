@@ -40,7 +40,13 @@ public class DreamsRepository:IDreamsRepository
           await _context.SaveChangesAsync();
 
     }
-    
-    
-    
+
+    public async Task DeleteDream(Dream dream)
+    {
+        _context.Dreams.Remove(dream);
+         await _context.SaveChangesAsync();
+
+        
+        //throw new NotImplementedException();
+    }
 }

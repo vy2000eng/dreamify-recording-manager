@@ -65,7 +65,18 @@ public class S3Processor:IS3Processor
         
         
     }
-    
-    
-    
+
+    public async Task DeleteFromS3(string userId, string fileName)
+    {
+        var key = $"recordings/{userId}/{fileName}";
+        var deleteRequest = new DeleteObjectRequest
+        {
+            BucketName = _awsOptions.Bucket,
+            Key = key
+        };
+
+        await _s3Client.DeleteObjectAsync(deleteRequest); //GetObjectAsync(getRequest); 
+
+
+    }
 }

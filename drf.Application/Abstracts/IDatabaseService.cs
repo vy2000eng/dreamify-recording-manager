@@ -11,4 +11,6 @@ public interface IDatabaseService
     Task<Dream?> GetDream(ClaimsPrincipal claimsPrincipal, string dreamId);
     Task<List<Dream>> GetDreamMetaData(ClaimsPrincipal claimsPrincipal);
     Task UpdateDream(ClaimsPrincipal claimsPrincipal, UpdateDreamRequest request);
+    
+    Task DeleteDream(ClaimsPrincipal claimsPrincipal, string dreamId);
 }

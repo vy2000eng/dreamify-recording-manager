@@ -106,6 +106,38 @@ public class BucketController:ControllerBase
      
     }
 
+    [HttpDelete("deleteDream/{dreamId}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IResult> DeleteDream(string dreamId)
+    {
+
+        try
+        {      
+            var dream = await _databaseService.GetDream(User, dreamId);
+            if (dream == null)
+            {
+                return Results.NotFound(new { error = "Dream not found" });
+            }
+
+            await _bucketService.DeleteDreamFromS3Bucket(User, dream.FileName);
+            await _databaseService.DeleteDream(User, dreamId);//GetDream(User, dreamId);
+
+            return Results.Ok(200);
+
+        }
+        catch (Exception ex)
+        {
+            return Results.BadRequest("An Unexpected error occured while deleting dream.");
+
+            
+        }
+
+        
+    }
+    
+
+    
+
     
     
     

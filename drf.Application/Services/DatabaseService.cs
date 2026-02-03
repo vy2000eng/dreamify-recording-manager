@@ -100,7 +100,21 @@ public class DatabaseService:IDatabaseService
 
 
         }
+
+    public async Task DeleteDream(ClaimsPrincipal claimsPrincipal, string dreamId)
+    {
+        var userId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                     ?? claimsPrincipal.FindFirst("sub")?.Value;
+        if (userId == null)
+        {
+            throw new UserNotFoundException();
+        }
+        
+        
+        var dream  = await _dreamsRepository.GetDream(dreamId);
+        await _dreamsRepository.DeleteDream(dream);
     }
+}
     
     
 
