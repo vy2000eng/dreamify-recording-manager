@@ -13,4 +13,6 @@ public interface IDatabaseService
     Task UpdateDream(ClaimsPrincipal claimsPrincipal, UpdateDreamRequest request);
     
     Task DeleteDream(ClaimsPrincipal claimsPrincipal, string dreamId);
+    
+    Task DeleteAllDreamsAndUser(ClaimsPrincipal claimsPrincipal);
 }

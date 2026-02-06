@@ -28,8 +28,18 @@ public class UserRepository: IUserRepository
         return await _context.Dreams.Where(dreams => dreams.UserId == Guid.Parse(userId)).ToListAsync(); ;
         
     }
-    
-   // public async Task
+
+    public async Task DeleteUser(string userId)
+    {
+        var user = await _context.Users.FindAsync(Guid.Parse(userId));
+        if (user != null)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    // public async Task
 
 
 }   

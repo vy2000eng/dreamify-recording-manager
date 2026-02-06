@@ -9,4 +9,5 @@ public interface IBucketService
     Task<MemoryStream> DownloadDreamFromS3Bucket(ClaimsPrincipal claimsPrincipal, string fileName);
     
     public Task DeleteDreamFromS3Bucket(ClaimsPrincipal claimsPrincipal, string fileName);
+    public Task DeleteAllDataFromS3Bucket(ClaimsPrincipal claimsPrincipal);
 }

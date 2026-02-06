@@ -49,4 +49,12 @@ public class DreamsRepository:IDreamsRepository
         
         //throw new NotImplementedException();
     }
+
+    public async Task DeleteAllDreams(List<Dream> dreams)
+    {
+        _context.Dreams.RemoveRange(dreams);
+        await _context.SaveChangesAsync();
+
+        
+    }
 }

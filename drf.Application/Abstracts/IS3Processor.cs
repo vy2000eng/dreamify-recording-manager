@@ -10,4 +10,6 @@ public interface IS3Processor
     public Task<MemoryStream> DownloadFromS3(string userId, string fileName);
     
     public Task DeleteFromS3(string userId, string fileName);
+    
+    public Task DeleteAllUserDataFromS3(string userId);
 }

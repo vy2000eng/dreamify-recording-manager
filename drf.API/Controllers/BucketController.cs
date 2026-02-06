@@ -134,6 +134,31 @@ public class BucketController:ControllerBase
 
         
     }
+
+    [HttpDelete("deleteAllUserData")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IResult> DeleteAllUserData()
+    {
+
+        try
+        {
+             // step 1.) deleted everything from s3 bucket
+             await _bucketService.DeleteAllDataFromS3Bucket(User);
+             // step 2.) delete all user data from db and user account  
+             await _databaseService.DeleteAllDreamsAndUser(User);
+            return Results.Ok(200);
+
+
+        }
+        catch
+        {
+            return Results.BadRequest("An Unexpected error occured while deleting user data.");
+
+            
+        }
+  
+
+    }
     
 
     

@@ -12,5 +12,7 @@ public interface IDreamsRepository
     public  Task UpdateDream(Dream dream);
     
     public Task DeleteDream(Dream dream);
+    
+    public Task DeleteAllDreams(List<Dream> dreams);
 
 }

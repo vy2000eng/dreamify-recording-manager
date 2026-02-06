@@ -60,4 +60,16 @@ public class BucketService:IBucketService
         }
         await _s3Processor.DeleteFromS3(userId, fileName);
     }
+
+    public async Task DeleteAllDataFromS3Bucket(ClaimsPrincipal claimsPrincipal)
+    {
+        var userId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                     ?? claimsPrincipal.FindFirst("sub")?.Value;
+        if (userId == null)
+        {
+            throw new UserNotFoundException();
+        }
+
+        await _s3Processor.DeleteAllUserDataFromS3(userId);
+    }
 }

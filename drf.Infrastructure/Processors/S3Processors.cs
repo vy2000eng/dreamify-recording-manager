@@ -79,4 +79,37 @@ public class S3Processor:IS3Processor
 
 
     }
+
+    public async Task DeleteAllUserDataFromS3(string userId)
+    {
+        var prefix = $"recordings/{userId}/";
+        var listRequest = new ListObjectsV2Request
+        {
+            BucketName = _awsOptions.Bucket,//_bucketName,
+            Prefix = prefix
+        };
+
+        ListObjectsV2Response listResponse;
+        do
+        {
+            listResponse = await _s3Client.ListObjectsV2Async(listRequest);
+        
+            if (listResponse.S3Objects.Count > 0)
+            {
+                var deleteObjectsRequest = new DeleteObjectsRequest
+                {
+                    BucketName = _awsOptions.Bucket,
+                    Objects = listResponse.S3Objects
+                        .Select(obj => new KeyVersion { Key = obj.Key })
+                        .ToList()
+                };
+
+                await _s3Client.DeleteObjectsAsync(deleteObjectsRequest);
+            }
+
+            // Continue if there are more objects (pagination)
+            listRequest.ContinuationToken = listResponse.NextContinuationToken;
+        
+        } while (listResponse.IsTruncated ?? false);
+    }
 }
