@@ -83,6 +83,8 @@ public class DatabaseService:IDatabaseService
         
         
         var dream  = await _dreamsRepository.GetDream(request.DreamId);
+        
+    
 
         if (request.Tag != null)
             dream.Tag = request.Tag;
