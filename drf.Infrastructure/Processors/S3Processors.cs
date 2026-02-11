@@ -93,8 +93,9 @@ public class S3Processor:IS3Processor
         do
         {
             listResponse = await _s3Client.ListObjectsV2Async(listRequest);
-        
-            if (listResponse.S3Objects.Count > 0)
+    
+            // Check for null AND count > 0
+            if (listResponse.S3Objects != null && listResponse.S3Objects.Count > 0)
             {
                 var deleteObjectsRequest = new DeleteObjectsRequest
                 {
@@ -109,7 +110,8 @@ public class S3Processor:IS3Processor
 
             // Continue if there are more objects (pagination)
             listRequest.ContinuationToken = listResponse.NextContinuationToken;
-        
+    
         } while (listResponse.IsTruncated ?? false);
+    
     }
 }
